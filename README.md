@@ -1,5 +1,5 @@
 # Description
-Django boilerplate app for Heroku with a CircleCI YAML deployment boilerplate file.  I've been using this *a lot* lately.  Basically do whatever with it... but it's not my fault if your app explodes.
+Django reimplementation of OpenSprites (http://opensprites.org/).
 
 # License
 The MIT License (MIT)
