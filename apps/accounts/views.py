@@ -35,14 +35,17 @@ class Join(FormView):
         super(Join, self).form_valid(form)
         doc = pq(url='https://scratch.mit.edu/site-api/comments/project/107940884/')
         found = len(doc('[data-comment-user="{0}"] + div .content:contains("{1}")'.format('Firedrake969', 'test')))
-        if found != 0:
+        if found != 0 and confirmation_id != '':
             form.save()
             user = authenticate(username=form.cleaned_data.get('username'),
                                 password=form.cleaned_data.get('password1'))
             login(self.request, user)
+            del self.request.session['confirmation_id']
             return redirect(reverse('index'))
         else:
-            pass
+            form.errors['non_field_errors'] = ['Code not found!']
+            return render(self.request, 'register.html',
+                          {'form': form})
             
 
 
