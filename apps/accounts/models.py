@@ -56,6 +56,12 @@ class OpenspritesUser(AbstractBaseUser, PermissionsMixin):
         verbose_name = _('user')
         verbose_name_plural = _('users')
 
+    def __str__(self):
+        return self.username
+
+    def get_short_name(self):
+        return self.username
+
     def save(self, *args, **kwargs):
         if not is_password_usable(self.password):
             self.set_password(self.password)

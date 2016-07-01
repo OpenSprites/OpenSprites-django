@@ -42,7 +42,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
 )
 
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -58,6 +57,8 @@ INSTALLED_APPS = (
     'apps.accounts',
     'apps.resources',
 )
+
+SITE_ID = 1
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',

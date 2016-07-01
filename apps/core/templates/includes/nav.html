@@ -1,0 +1,34 @@
+<nav>
+    <div class='c'>
+        <a href='/' class='logo'>
+            <b>open</b>sprites
+        </a>
+
+        <div class='nav'>
+            <a href='/search'>
+            search
+        </a>
+        {% if user.is_authenicated %}
+            <a href='/signout'>
+                sign out
+            </a>
+
+            <a href='/you'>
+                you
+            </a>
+
+            <a href='/share' class='super'>
+                share
+            </a>
+        {% else %}
+            <a href='/signin'>
+                sign in
+            </a>
+
+            <a href='/join' class='super'>
+                join
+            </a>
+        {% endif %}
+        </div>
+    </div>
+</nav>

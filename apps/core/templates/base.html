@@ -1,15 +1,29 @@
-{% load static %}
+{% load staticfiles %}
+
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Title{% block title %}{% endblock %}</title>
-    {% block morescripts %}{% endblock morescripts %}
-</head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width'>
+
+<title>
+    {% if title %}
+        {{title}} — OpenSprites
+    {% else %}
+        OpenSprites — Share your Sprites
+    {% endif %}
+</title>
+
+<link rel='stylesheet' href='//brick.a.ssl.fastly.net/Source+Sans+Pro:400,600,700/Inconsolata:500/Lato:400,600'>
+<link rel='stylesheet' href='//fonts.googleapis.com/icon?family=Material+Icons'>
+<link rel='stylesheet' href="{% static 'css/main.css' %}">
+
+<link rel='icon' href='/assets/img/logo/icon.png'>
+
 <body>
+    {% include 'includes/nav.html' %}
 
     {% block content %}{% endblock %}
 
-    {% block extra_scripts %}{% endblock extra_scripts %}
-
+    {% include 'includes/footer.html' %}
+    
+    <script src='/assets/js/main.js'></script>
 </body>
-</html>
