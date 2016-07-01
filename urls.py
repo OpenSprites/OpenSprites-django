@@ -9,5 +9,7 @@ urlpatterns = patterns('',
 
 	# Index views
     url(r'^$', Index.as_view(), name='index'),
+    url(r'^', include('apps.accounts.urls')),
+
     url(r'^(?i)admin/?', include(admin.site.urls)),
 )
