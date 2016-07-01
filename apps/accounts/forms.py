@@ -9,17 +9,11 @@ class LoginForm(forms.Form):
 
 
 class JoinForm(UserCreationForm):
-    username = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Username'}))
-    password1 = forms.CharField(required=True, widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Password'}))
-    password2 = forms.CharField(required=True, widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Confirm Password'}))
+    username = forms.CharField()
+    email = forms.CharField()
+    password1 = forms.CharField()
+    password2 = forms.CharField()
 
     class Meta:
         model = OpenspritesUser
         fields = ("username", "password1", "password2")
-
-    def save(self, commit=True): # todo
-        user = super(SignupForm, self).save(commit=False)
-        user.username = self.cleaned_data["username"]
-        if commit:
-            user.save()
-        return user

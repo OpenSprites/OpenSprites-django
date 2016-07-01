@@ -9,6 +9,7 @@
   </p>
 
   <form method='post'>
+    {% csrf_token %}
     <div class='split'>
       <div>
         <h2>Step One</h2>
@@ -29,12 +30,12 @@
 
             <tr>
               <td>Password</td>
-              <td><input name='password' pattern='.{3,}' title='3 characters, minimum' required type='password' placeholder='*********'></td>
+              <td><input name='password1' pattern='.{3,}' title='3 characters, minimum' required type='password' placeholder='*********'></td>
             </tr>
 
             <tr>
               <td>Retype Password</td>
-              <td><input name='passwordRepeat' required title='Retype the password above' type='password' placeholder='*********'></td>
+              <td><input name='password2' required title='Retype the password above' type='password' placeholder='*********'></td>
             </tr>
           </tbody>
         </table>
@@ -46,9 +47,9 @@
         We need to check that you're actually the Scratcher you say you are.
         
         <blockquote style='font-size:18px'>
-          Go to <a href='https://scratch.mit.edu/projects/47606468/' target='_blank'>this Scratch project</a> and comment the below code. <div style='margin-bottom:1em'></div>
+          Go to <a href='https://scratch.mit.edu/projects/107940884/' target='_blank'>this Scratch project</a> and comment the below code. <div style='margin-bottom:1em'></div>
 
-          <code id='code'>{{code}}</code>
+          <code id='code'>{{ confirmation_id }}</code>
           <div class='flat btn' data-clipboard-target='#code' id='copycode'>Copy</div>
         </blockquote>
 
