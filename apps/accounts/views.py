@@ -1,10 +1,12 @@
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
+from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import (FormView, UpdateView, CreateView,
                                        DeleteView)
 
 from .forms import LoginForm, JoinForm
+from .models import OpenspritesUser
 
 class Join(FormView):
     template_name = 'register.html'
@@ -56,3 +58,14 @@ class Login(FormView):
             form.errors['non_field_errors'] = ['Invalid login']
             return render(self.request, 'login.html',
                           {'form': form})
+
+class AccountPage(TemplateView):
+    template_name = 'account.html'
+    def get(self, request, user):
+        try:
+            user = request.user if user == '' else OpenspritesUser.objects.get(username__iexact=user)
+            username = user.username
+        except request.user.DoesNotExist:
+            username = user
+            user = None
+        return render(request, self.template_name, {'user': user, 'username': username,})

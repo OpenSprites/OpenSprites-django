@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<header><main>
+  <h1>
+    {{ username }}
+  </h1>
+
+  {% if user %}
+    <h4>
+      Sample Text
+    </h4>
+  {% else %}
+    <h4>
+      {{ username }} isn't on OpenSprites yet.
+    </h4>
+
+    <br>
+
+    <a class='super btn' href='https://scratch.mit.edu/users/{{ username }}/#comment-form'>
+      invite them!
+    </a>
+  {% endif %}
+</main></header>
+
+<main>
+<img src='/users/{{ username }}/avatar?s=128' width=128 height=128>
+</main>
+{% endblock %}
