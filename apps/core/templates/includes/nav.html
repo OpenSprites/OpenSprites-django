@@ -20,7 +20,7 @@
             <a href='/share' class='super'>
                 share
             </a>
-        {% else %}
+        {% elif not user.is_authenticated %}
             <a href='/signin'>
                 sign in
             </a>
