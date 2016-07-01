@@ -1,23 +1,24 @@
 {% load staticfiles %}
 
 <!DOCTYPE html>
-<meta charset='utf-8'>
-<meta name='viewport' content='width=device-width'>
-
-<title>
-    {% if title %}
-        {{title}} — OpenSprites
-    {% else %}
-        OpenSprites — Share your Sprites
-    {% endif %}
-</title>
-
-<link rel='stylesheet' href='//brick.a.ssl.fastly.net/Source+Sans+Pro:400,600,700/Inconsolata:500/Lato:400,600'>
-<link rel='stylesheet' href='//fonts.googleapis.com/icon?family=Material+Icons'>
-<link rel='stylesheet' href="{% static 'css/main.css' %}">
-
-<link rel='icon' href='/assets/img/logo/icon.png'>
-
+<html>
+<head>
+    <title>Title{% block title %}{% endblock %}</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width'>
+    <title>
+        {% if title %}
+            {{title}} — OpenSprites
+        {% else %}
+            OpenSprites — Share your Sprites
+        {% endif %}
+    </title>
+    <link rel='icon' href='/assets/img/logo/icon.png'>
+    <link rel='stylesheet' href='//brick.a.ssl.fastly.net/Source+Sans+Pro:400,600,700/Inconsolata:500/Lato:400,600'>
+    <link rel='stylesheet' href='//fonts.googleapis.com/icon?family=Material+Icons'>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css" />
+    {% block morescripts %}{% endblock morescripts %}
+</head>
 <body>
     {% include 'includes/nav.html' %}
 
