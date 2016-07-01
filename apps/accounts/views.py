@@ -1,3 +1,8 @@
+import string
+import random
+
+from pyquery import PyQuery as pq
+
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
@@ -5,6 +10,9 @@ from django.views.generic.edit import (FormView, UpdateView, CreateView,
                                        DeleteView)
 
 from .forms import LoginForm, JoinForm
+
+def id_generator(size=10, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
 
 class Join(FormView):
     template_name = 'register.html'
@@ -14,16 +22,29 @@ class Join(FormView):
     def get(self, request):
         if request.user.is_authenticated():
             return redirect(reverse('index'))
+        request.session['confirmation_id'] = id_generator()
         return super(Join, self).get(request)
 
+    def get_context_data(self, **kwargs):
+        context = super(Join, self).get_context_data(**kwargs)
+        context['confirmation_id'] = self.request.session.get('confirmation_id', '')
+        return context
+
     def form_valid(self, form):
+        confirmation_id = self.request.session.get('confirmation_id', '')
         super(Join, self).form_valid(form)
-        form.save()
-        user = authenticate(username=form.cleaned_data.get('username'),
-                            password=form.cleaned_data.get('password1'))
-        login(self.request, user)
-        user.set_ip(self.request)
-        return redirect(reverse('index'))
+        doc = pq(url='https://scratch.mit.edu/site-api/comments/project/107940884/')
+        found = len(doc('[data-comment-user="{0}"] + div .content:contains("{1}")'.format('Firedrake969', 'test')))
+        if found != 0:
+            form.save()
+            user = authenticate(username=form.cleaned_data.get('username'),
+                                password=form.cleaned_data.get('password1'))
+            login(self.request, user)
+            return redirect(reverse('index'))
+        else:
+            pass
+            
+
 
 class Login(FormView):
     template_name = 'login.html'
