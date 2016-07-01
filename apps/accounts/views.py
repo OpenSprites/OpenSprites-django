@@ -4,20 +4,20 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import (FormView, UpdateView, CreateView,
                                        DeleteView)
 
-from .forms import LoginForm
+from .forms import LoginForm, JoinForm
 
 class Join(FormView):
     template_name = 'register.html'
-    form_class = SignupForm
+    form_class = JoinForm
     success_url = '/'
 
     def get(self, request):
         if request.user.is_authenticated():
             return redirect(reverse('index'))
-        return super(SignUp, self).get(request)
+        return super(Join, self).get(request)
 
     def form_valid(self, form):
-        super(SignUp, self).form_valid(form)
+        super(Join, self).form_valid(form)
         form.save()
         user = authenticate(username=form.cleaned_data.get('username'),
                             password=form.cleaned_data.get('password1'))

@@ -47,6 +47,8 @@ class OpenspritesUser(AbstractBaseUser, PermissionsMixin):
                     'active. Unselect this instead of deleting accounts.'))
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
+    verification_code = models.CharField(max_length=255)
+
     objects = OpenspritesUserManager()
 
     USERNAME_FIELD = 'username'
