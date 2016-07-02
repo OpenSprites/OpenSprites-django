@@ -11,6 +11,7 @@ from django.views.generic.base import View
 from django.views.generic.edit import (FormView, UpdateView, CreateView,
                                        DeleteView)
 
+from apps.core.utils import get_or_none
 from .forms import LoginForm, JoinForm
 from .models import OpenspritesUser
 
@@ -60,7 +61,6 @@ class Join(FormView):
                           {'form': form})
             
 
-
 class Login(FormView):
     template_name = 'login.html'
     form_class = LoginForm
@@ -82,8 +82,6 @@ class Login(FormView):
                 login(self.request, user)
                 if not user.banned:
                     return super(Login, self).form_valid(form)
-                # else:
-                #     return redirect(reverse('ban-page'))
             else:
                 form.errors['non_field_errors'] = ['Your account is not active.']
                 return render(self.request, 'index.html',
@@ -93,13 +91,21 @@ class Login(FormView):
             return render(self.request, 'login.html',
                           {'form': form})
 
+
 class AccountPage(TemplateView):
     template_name = 'account.html'
-    def get(self, request, user):
-        try:
-            user = request.user if user == '' else OpenspritesUser.objects.get(username__iexact=user)
-            username = user.username
-        except request.user.DoesNotExist:
-            username = user
-            user = None
-        return render(request, self.template_name, {'user': user, 'username': username,})
+
+    def get(self, request, **kwargs):
+        if not kwargs.get('user') and not request.user.is_authenticated:
+            return redirect('/')
+        return super(AccountPage, self).get(request, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(AccountPage, self).get_context_data(**kwargs)
+        if not self.kwargs.get('user'):
+            context['user'] = self.request.user
+            context['username'] = self.request.user.username
+        else:
+            context['user'] = get_or_none(OpenspritesUser, username__iexact=self.kwargs['user'])
+            context['username'] = self.kwargs['user']
+        return context

@@ -3,9 +3,9 @@
 
 {% block content %}
 	<header class='center'><main>
-  {% if user.is_authenticated %}
+  {% if request.user.is_authenticated %}
     <h1>
-      Howdy, <a href='/you'>{{ user }}</a>
+      Howdy, <a href='/you'>{{ request.user }}</a>
     </h1>
   {% else %}
     <h1>
@@ -25,7 +25,7 @@
   {% endif %}
 </main></header>
 
-{% if not user.is_authenticated %}
+{% if not request.user.is_authenticated %}
   <main class='slim center'>
     <h2>
       What is?
@@ -87,7 +87,7 @@
   </div>
 </main>
 
-{% if not user.is_authenticated %}
+{% if not request.user.is_authenticated %}
   <hr>
 
   <main class='slim center'>
