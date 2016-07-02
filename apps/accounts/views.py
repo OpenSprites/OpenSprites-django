@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView
+from django.views.generic.base import View
 from django.views.generic.edit import (FormView, UpdateView, CreateView,
                                        DeleteView)
 
@@ -15,6 +16,15 @@ from .models import OpenspritesUser
 
 def id_generator(size=10, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
+
+
+# TODO: MAKE POST REQUEST
+class Logoff(View):
+
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('/')
+
 
 class Join(FormView):
     template_name = 'register.html'

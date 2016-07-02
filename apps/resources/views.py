@@ -7,5 +7,5 @@ from django.views.generic.edit import (FormView, UpdateView, CreateView,
 from .forms import ResourceUploadForm
 
 class ResourceUploadView(CreateView):
-    form_class = ResourceUploadView
+    form_class = ResourceUploadForm
     template_name = 'share.html'

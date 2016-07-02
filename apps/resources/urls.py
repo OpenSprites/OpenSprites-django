@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from apps.accounts.views import ResourceUploadView
+from .views import ResourceUploadView
 
 urlpatterns = [
     url(r'^share/?$', ResourceUploadView.as_view(), name='share'),
